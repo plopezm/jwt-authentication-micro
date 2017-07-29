@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>swarm</artifactId>
+        <groupId>com.aeox.jeestarter</groupId>
+        <version>0.1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>app-db</artifactId>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>${version.flyway.plugin}</version>
+                <configuration>
+                    <url>jdbc:postgresql://${postgresql.ip}:${postgresql.port}/${postgresql.database}</url>
+                    <user>${postgresql.user}</user>
+                    <password>${postgresql.password}</password>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.postgresql</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>${version.postgresql}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

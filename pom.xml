@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.aeox.jeestarter</groupId>
+    <artifactId>swarm</artifactId>
+    <version>0.1.0</version>
+    <modules>
+        <module>app</module>
+        <module>app-db</module>
+    </modules>
+    <packaging>pom</packaging>
+    <properties>
+        <maven.min.version>3.2.1</maven.min.version>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <failOnMissingWebXml>false</failOnMissingWebXml>
+
+        <version.wildfly-swarm>2017.7.0</version.wildfly-swarm>
+        <version.flyway.plugin>4.2.0</version.flyway.plugin>
+        <version.h2>1.4.196</version.h2>
+        <version.postgresql>9.4.1207</version.postgresql>
+
+        <postgresql.ip>localhost</postgresql.ip>
+        <postgresql.port>5432</postgresql.port>
+        <postgresql.database>usermgmt</postgresql.database>
+        <postgresql.user>postgres</postgresql.user>
+        <postgresql.password>postgres</postgresql.password>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.wildfly.swarm</groupId>
+                <artifactId>bom</artifactId>
+                <version>${version.wildfly-swarm}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <!-- Java EE 7 dependency -->
+            <dependency>
+                <groupId>javax</groupId>
+                <artifactId>javaee-api</artifactId>
+                <version>7.0</version>
+                <scope>provided</scope>
+            </dependency>
+            <!-- Unit testing dependencies -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.12</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- JDBC database driver -->
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${version.postgresql}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${version.h2}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

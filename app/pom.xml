@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>swarm</artifactId>
+        <groupId>com.aeox.jeestarter</groupId>
+        <version>0.1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>app</artifactId>
+    <packaging>war</packaging>
+
+    <dependencies>
+        <!-- Java EE 7 dependency -->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+        </dependency>
+        <!-- WildFly Swarm Fractions -->
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>transactions</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>ejb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>cdi</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>jaxrs</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>jaxrs-jaxb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>undertow</artifactId>
+        </dependency>
+        <!-- JDBC database driver -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+        <!-- Unit testing dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.wildfly.swarm</groupId>
+                <artifactId>wildfly-swarm-plugin</artifactId>
+                <version>${version.wildfly-swarm}</version>
+                <configuration>
+                    <properties>
+                        <swarm.bind.address>0.0.0.0</swarm.bind.address>
+                        <jboss.node.name>${project.artifactId}</jboss.node.name>
+                    </properties>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>package</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>
