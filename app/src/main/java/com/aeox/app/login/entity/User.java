@@ -2,27 +2,48 @@ package com.aeox.app.login.entity;
 
 import com.aeox.app.common.entity.AbstractEntity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * Created by pablolm on 23/7/17.
  */
 @Entity
-@Table(name = "Users")
+@Table(name = "Users",
+        indexes = {
+            @Index(name = "index_users_username", columnList = "username", unique = true)
+        })
 @NamedQueries({
-    @NamedQuery(name = User.NAMED_GET_BY_USER_AND_PASSWORD, query = "SELECT u FROM User u WHERE u.username = :username AND u.password = :password")
+    @NamedQuery(name = User.NAMED_GET_BY_USER_AND_PASSWORD, query = "SELECT u FROM User u WHERE u.username = :username AND u.password = :password"),
+    @NamedQuery(name = User.NAMED_GET_SALT_BY_USERNAME, query = "SELECT u.salt FROM User u WHERE u.username = :username")
 })
 public class User extends AbstractEntity {
 
     public static final String NAMED_GET_BY_USER_AND_PASSWORD = "login.entity.User.getByUserAndPassword";
+    public static final String NAMED_GET_SALT_BY_USERNAME = "login.entity.User.getSaltByUsername";
 
     @Column(nullable = false, unique = true)
     private String username;
     @Column(nullable = false)
     private String password;
+    private byte[] salt;
     @ManyToOne
     @JoinColumn(name = "group_id")
     private Group group;
+
+    public User() {
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
     public String getUsername() {
         return username;
@@ -46,5 +67,22 @@ public class User extends AbstractEntity {
 
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+    public byte[] getSalt() {
+        return salt;
+    }
+
+    public void setSalt(byte[] salt) {
+        this.salt = salt;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", group=" + group +
+                '}';
     }
 }

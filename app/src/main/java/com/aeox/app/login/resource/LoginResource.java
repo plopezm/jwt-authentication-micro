@@ -22,10 +22,11 @@ public class LoginResource {
     private LoginService loginService;
 
     @GET
-    @Path("{user}/{pass}")
+    @Path("{username}/{password}")
     @Produces(value = {"application/json"})
-    public Response login(@PathParam("user") String user, @PathParam("pass")String password){
-        User userLogged = loginService.findByUsernameAndPassword(user, password);
+    public Response login(@PathParam("username") String username, @PathParam("password")String password){
+        User userToLogin = new User(username, password);
+        User userLogged = loginService.findByUsernameAndPassword(userToLogin);
         return Response.ok().entity(userLogged).build();
     }
 

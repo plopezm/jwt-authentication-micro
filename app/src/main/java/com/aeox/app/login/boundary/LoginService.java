@@ -1,6 +1,8 @@
 package com.aeox.app.login.boundary;
 
 import com.aeox.app.login.entity.User;
+import com.aeox.app.login.security.boundary.PasswordEncoded;
+import org.jboss.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -14,24 +16,26 @@ import javax.validation.constraints.NotNull;
 @Stateless
 public class LoginService {
 
+    private static final Logger LOG = Logger.getLogger(LoginService.class.getName());
+
     @PersistenceContext
     private EntityManager em;
 
-    public User findByUsernameAndPassword(@NotNull String username, @NotNull String password){
+    @PasswordEncoded
+    public User findByUsernameAndPassword(@NotNull User user){
+        LOG.info(user);
         Query query = em.createNamedQuery(User.NAMED_GET_BY_USER_AND_PASSWORD);
-        query.setParameter("username", username);
-        query.setParameter("password", password);
+        query.setParameter("username", user.getUsername());
+        query.setParameter("password", user.getPassword());
         return (User) query.getSingleResult();
     }
 
-    public User createUser(@NotNull String username, @NotNull String password){
-        User userToCreate = new User();
-        userToCreate.setUsername(username);
-        userToCreate.setPassword(password);
-        em.persist(userToCreate);
+    @PasswordEncoded
+    public User createUser(@NotNull User user){
+        em.persist(user);
         em.flush();
-        em.refresh(userToCreate);
-        return userToCreate;
+        em.refresh(user);
+        return user;
     }
 
 
