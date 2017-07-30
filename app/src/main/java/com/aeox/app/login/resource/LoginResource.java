@@ -4,10 +4,7 @@ import com.aeox.app.login.boundary.LoginService;
 import com.aeox.app.login.entity.User;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
 /**
@@ -28,6 +25,13 @@ public class LoginResource {
         User userToLogin = new User(username, password);
         User userLogged = loginService.findByUsernameAndPassword(userToLogin);
         return Response.ok().entity(userLogged).build();
+    }
+
+    @POST
+    @Produces(value = {"application/json"})
+    public Response createUser(User user){
+
+        return null;
     }
 
 }

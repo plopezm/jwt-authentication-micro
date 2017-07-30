@@ -27,3 +27,5 @@ CREATE TABLE Users (
   group_id    bigint not null,
   FOREIGN KEY (group_id) REFERENCES Groups(id)
 );
+
+CREATE INDEX index_users_username ON Users(username);

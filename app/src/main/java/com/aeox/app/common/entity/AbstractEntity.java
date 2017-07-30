@@ -1,5 +1,7 @@
 package com.aeox.app.common.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -14,6 +16,7 @@ public class AbstractEntity implements Serializable{
     private long id;
 
     @Version
+    @JsonIgnore
     private long version;
 
     public long getId() {

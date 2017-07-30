@@ -1,6 +1,7 @@
 package com.aeox.app.login.entity;
 
 import com.aeox.app.common.entity.AbstractEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,8 +31,10 @@ public class User extends AbstractEntity {
 
     @Column(nullable = false, unique = true)
     private String username;
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
+    @JsonIgnore
     private byte[] salt;
     @ManyToOne
     @JoinColumn(name = "group_id")

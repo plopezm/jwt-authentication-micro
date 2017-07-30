@@ -23,7 +23,6 @@ public class LoginService {
 
     @PasswordEncoded
     public User findByUsernameAndPassword(@NotNull User user){
-        LOG.info(user);
         Query query = em.createNamedQuery(User.NAMED_GET_BY_USER_AND_PASSWORD);
         query.setParameter("username", user.getUsername());
         query.setParameter("password", user.getPassword());
