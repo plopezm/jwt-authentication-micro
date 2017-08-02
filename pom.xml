@@ -65,6 +65,12 @@
                 <version>${version.h2}</version>
                 <scope>test</scope>
             </dependency>
+            <!-- JWT library -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>0.6.0</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>

@@ -44,6 +44,10 @@
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
+            <artifactId>jaxrs-cdi</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
             <artifactId>undertow</artifactId>
         </dependency>
         <!-- JDBC database driver -->
@@ -59,6 +63,11 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+        </dependency>
+        <!-- JWT library -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
         </dependency>
     </dependencies>
 
