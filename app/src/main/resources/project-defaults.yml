@@ -1,4 +1,8 @@
 swarm:
+  undertow:
+    servers:
+      default:
+        default-host: 0.0.0.0
   datasources:
     jdbc-drivers:
       postgresdriver:

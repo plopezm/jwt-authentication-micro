@@ -79,7 +79,6 @@
                 <version>${version.wildfly-swarm}</version>
                 <configuration>
                     <properties>
-                        <swarm.bind.address>0.0.0.0</swarm.bind.address>
                         <jboss.node.name>${project.artifactId}</jboss.node.name>
                     </properties>
                 </configuration>
