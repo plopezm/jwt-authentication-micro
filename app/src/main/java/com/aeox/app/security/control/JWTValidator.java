@@ -22,7 +22,7 @@ public class JWTValidator implements ContainerRequestFilter{
 
     private static final Logger LOG = Logger.getLogger(JWTValidator.class.getName());
     @Inject
-    private KeyGenerator keyGenerator;
+    private Key serverKey;
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
@@ -34,8 +34,7 @@ public class JWTValidator implements ContainerRequestFilter{
         try {
 
             // Validate the token
-            Key key = keyGenerator.generateKey();
-            Jws<Claims> claimsJws = Jwts.parser().setSigningKey(key).parseClaimsJws(token);
+            Jws<Claims> claimsJws = Jwts.parser().setSigningKey(serverKey).parseClaimsJws(token);
             LOG.info(claimsJws.toString());
 
 

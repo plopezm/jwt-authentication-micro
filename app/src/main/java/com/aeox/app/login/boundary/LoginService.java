@@ -30,7 +30,7 @@ public class LoginService {
     private static final Logger LOG = Logger.getLogger(LoginService.class.getName());
 
     @Inject
-    private KeyGenerator keyGenerator;
+    private Key serverKey;
 
     @PersistenceContext
     private EntityManager em;
@@ -51,12 +51,11 @@ public class LoginService {
     }
 
     private String issueToken(String uriInfo, String username) {
-        Key key = keyGenerator.generateKey();
         String jwtToken = Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(LocalDateTime.now().plusMinutes(15L).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()))
-                .signWith(SignatureAlgorithm.HS512, key)
+                .signWith(SignatureAlgorithm.HS512, serverKey)
                 .compact();
         return jwtToken;
     }
