@@ -1,6 +1,8 @@
 package com.aeox.app;
 
 import com.aeox.app.common.exception.NotFoundExceptionMapper;
+import com.aeox.app.login.exception.ExpiredJwtExceptionMapper;
+import com.aeox.app.login.exception.SignatureExceptionMapper;
 import com.aeox.app.login.resource.LoginResource;
 import com.aeox.app.security.control.JWTValidator;
 import com.aeox.app.security.exception.UnauthorizedExceptionMapper;
@@ -26,6 +28,8 @@ public class JAXRSConfiguration extends Application {
         //MAPPERS
         classes.add(NotFoundExceptionMapper.class);
         classes.add(UnauthorizedExceptionMapper.class);
+        classes.add(ExpiredJwtExceptionMapper.class);
+        classes.add(SignatureExceptionMapper.class);
         //PROVIDERS
         classes.add(JWTValidator.class);
         return classes;

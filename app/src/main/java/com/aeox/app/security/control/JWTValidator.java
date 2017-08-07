@@ -1,5 +1,7 @@
 package com.aeox.app.security.control;
 
+import com.aeox.app.login.dto.ErrorCode;
+import com.aeox.app.login.dto.ErrorMessage;
 import com.aeox.app.login.entity.Permission;
 import com.aeox.app.login.entity.User;
 import com.aeox.app.security.boundary.JWTSecurized;
@@ -42,28 +44,24 @@ public class JWTValidator implements ContainerRequestFilter{
 
         String token = authorizationHeader.substring("Bearer".length()).trim();
 
-        try {
-            // Validate the token
-            Jws<Claims> claimsJws = Jwts.parser().setSigningKey(serverKey).parseClaimsJws(token);
-            LOG.info(claimsJws.toString());
+        // Validate the token
+        Jws<Claims> claimsJws = Jwts.parser().setSigningKey(serverKey).parseClaimsJws(token);
+        LOG.info(claimsJws.toString());
 
-            ObjectMapper objectMapper = new ObjectMapper();
-            User user = objectMapper.convertValue(claimsJws.getBody().get("user"), User.class);
+        ObjectMapper objectMapper = new ObjectMapper();
+        User user = objectMapper.convertValue(claimsJws.getBody().get("user"), User.class);
 
-            Method method = resourceInfo.getResourceMethod();
-            JWTSecurized securizer = method.getDeclaredAnnotation(JWTSecurized.class);
+        Method method = resourceInfo.getResourceMethod();
+        JWTSecurized securizer = method.getDeclaredAnnotation(JWTSecurized.class);
 
-            if(securizer.permissions().length == 0)
-                return;
+        if(securizer.permissions().length == 0)
+            return;
 
-            if(!Arrays.stream(securizer.permissions()).anyMatch(s -> user.getGroup().getPermissions().contains(Permission.fromString(s)))){
-                LOG.warning("[Permissions]: NOT ALLOWED -> "+ user);
-                requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
-            }
-
-        } catch (Exception e) {
-            LOG.severe(e.getMessage());
-            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+        if(!Arrays.stream(securizer.permissions()).anyMatch(s -> user.getGroup().getPermissions().contains(Permission.fromString(s)))){
+            LOG.warning("[Permissions]: NOT ALLOWED -> "+ user);
+            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
+                    .entity(new ErrorMessage(ErrorCode.PERMISSIONS_NOT_ALLOWED, "Not allowed"))
+                    .build());
         }
     }
 

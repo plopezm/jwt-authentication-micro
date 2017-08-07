@@ -1,14 +1,12 @@
 package com.aeox.app.login.boundary;
 
-import com.aeox.app.login.entity.TokenSession;
 import com.aeox.app.login.entity.User;
-import com.aeox.app.login.security.boundary.PasswordEncoded;
+import com.aeox.app.login.encoder.boundary.PasswordEncoded;
 import com.aeox.app.security.exception.UnauthorizedException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.jboss.logging.Logger;
 
-import javax.crypto.KeyGenerator;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -43,13 +41,6 @@ public class LoginService {
         return user;
     }
 
-    public TokenSession createTokenSession(@NotNull TokenSession tokenSession){
-        em.persist(tokenSession);
-        em.flush();
-        em.refresh(tokenSession);
-        return tokenSession;
-    }
-
     public User findByUsernameAndPassword(@NotNull User user){
         LOG.info(user);
         Query query = em.createNamedQuery(User.NAMED_GET_BY_USER_AND_PASSWORD);
@@ -62,13 +53,6 @@ public class LoginService {
     public String loginUser(String uriInfo, User user) throws UnauthorizedException {
         try {
             User userFound = this.findByUsernameAndPassword(user);
-
-//            TokenSession tokenSession = new TokenSession();
-//            tokenSession.setToken(issueToken(uriInfo, userFound.getUsername()));
-//            tokenSession.setUser(userFound);
-//            this.createTokenSession(tokenSession);
-
-//            return tokenSession.getToken();
             return issueToken(uriInfo, userFound);
         }catch(NoResultException nre){
             LOG.warn(nre.getMessage());

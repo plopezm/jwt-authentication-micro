@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.aeox.app.login.security.control;
+package com.aeox.app.login.encoder.control;
 
 import com.aeox.app.login.entity.User;
-import com.aeox.app.login.security.boundary.PasswordEncoded;
+import com.aeox.app.login.encoder.boundary.PasswordEncoded;
 
 import javax.annotation.Priority;
 import javax.interceptor.AroundInvoke;

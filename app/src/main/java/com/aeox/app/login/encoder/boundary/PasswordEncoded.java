@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.aeox.app.login.security.boundary;
+package com.aeox.app.login.encoder.boundary;
 
 import javax.interceptor.InterceptorBinding;
 import java.lang.annotation.ElementType;
