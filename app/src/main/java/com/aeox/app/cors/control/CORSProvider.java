@@ -5,6 +5,8 @@
  */
 package com.aeox.app.cors.control;
 
+import com.aeox.app.cors.boundary.CORSEnabled;
+
 import java.io.IOException;
 import java.lang.reflect.Method;
 import javax.ws.rs.container.ContainerRequestContext;
