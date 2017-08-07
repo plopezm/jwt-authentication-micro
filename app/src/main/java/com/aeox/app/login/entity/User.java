@@ -81,6 +81,21 @@ public class User extends AbstractEntity {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+
+        User user = (User) o;
+
+        return getId()== ((User) o).getId() && getUsername().equals(user.getUsername());
+    }
+
+    @Override
+    public int hashCode() {
+        return getUsername().hashCode();
+    }
+
+    @Override
     public String toString() {
         return "User{" +
                 "username='" + username + '\'' +

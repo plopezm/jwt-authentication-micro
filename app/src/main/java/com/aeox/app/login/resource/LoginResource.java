@@ -1,6 +1,7 @@
 package com.aeox.app.login.resource;
 
 import com.aeox.app.login.boundary.LoginService;
+import com.aeox.app.login.entity.Permission;
 import com.aeox.app.login.entity.User;
 import com.aeox.app.security.boundary.JWTSecurized;
 import com.aeox.app.security.exception.UnauthorizedException;
@@ -38,7 +39,7 @@ public class LoginResource {
 
     @POST
     @Consumes(value = {"application/json"})
-    @JWTSecurized
+    @JWTSecurized(permissions = {"ALL","CREATE"})
     public Response createUser(User user){
         User userCreated = loginService.createUser(user);
         return Response.created(URI.create("/users")).build();
@@ -46,7 +47,7 @@ public class LoginResource {
 
     @GET
     @Path("/{id}")
-    @JWTSecurized
+    @JWTSecurized(permissions = {"ALL", "READ"})
     public Response getUser(@PathParam("id") Long id){
         User userFound = loginService.getUser(id);
         return Response.ok().entity(userFound).build();

@@ -50,16 +50,6 @@ public class LoginService {
         return tokenSession;
     }
 
-    private String issueToken(String uriInfo, String username) {
-        String jwtToken = Jwts.builder()
-                .setSubject(username)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(LocalDateTime.now().plusMinutes(15L).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()))
-                .signWith(SignatureAlgorithm.HS512, serverKey)
-                .compact();
-        return jwtToken;
-    }
-
     public User findByUsernameAndPassword(@NotNull User user){
         LOG.info(user);
         Query query = em.createNamedQuery(User.NAMED_GET_BY_USER_AND_PASSWORD);
@@ -79,11 +69,23 @@ public class LoginService {
 //            this.createTokenSession(tokenSession);
 
 //            return tokenSession.getToken();
-            return issueToken(uriInfo, userFound.getUsername());
+            return issueToken(uriInfo, userFound);
         }catch(NoResultException nre){
             LOG.warn(nre.getMessage());
             throw new UnauthorizedException();
         }
+    }
+
+    private String issueToken(String uriInfo, User user) {
+        String jwtToken = Jwts.builder()
+                .setIssuer(uriInfo)
+                .setSubject(user.getUsername())
+                .claim("user", user)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(LocalDateTime.now().plusMinutes(15L).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()))
+                .signWith(SignatureAlgorithm.HS512, serverKey)
+                .compact();
+        return jwtToken;
     }
 
     public User getUser(Long id){

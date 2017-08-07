@@ -10,4 +10,5 @@ import java.lang.annotation.Target;
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD})
 public @interface JWTSecurized {
+    String[] permissions() default {};
 }

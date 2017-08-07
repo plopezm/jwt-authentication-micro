@@ -20,4 +20,25 @@ public class Permission extends AbstractEntity{
     public void setName(String name) {
         this.name = name;
     }
+
+    public static Permission fromString(String s){
+        Permission permission = new Permission();
+        permission.setName(s);
+        return permission;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Permission that = (Permission) o;
+
+        return name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
 }
