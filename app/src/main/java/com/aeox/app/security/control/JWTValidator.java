@@ -5,6 +5,7 @@ import com.aeox.app.login.dto.ErrorMessage;
 import com.aeox.app.login.entity.Permission;
 import com.aeox.app.login.entity.User;
 import com.aeox.app.security.boundary.JWTSecurized;
+import com.aeox.app.security.exception.UserNotAllowedException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -58,10 +59,7 @@ public class JWTValidator implements ContainerRequestFilter{
             return;
 
         if(!Arrays.stream(securizer.permissions()).anyMatch(s -> user.getGroup().getPermissions().contains(Permission.fromString(s)))){
-            LOG.warning("[Permissions]: NOT ALLOWED -> "+ user);
-            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
-                    .entity(new ErrorMessage(ErrorCode.PERMISSIONS_NOT_ALLOWED, "Not allowed"))
-                    .build());
+            throw new UserNotAllowedException(user);
         }
     }
 

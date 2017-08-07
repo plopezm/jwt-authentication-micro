@@ -2,6 +2,7 @@ package com.aeox.app.login.entity;
 
 import com.aeox.app.common.entity.AbstractEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by pablolm on 23/7/17.
@@ -29,13 +31,16 @@ public class User extends AbstractEntity {
     public static final String NAMED_GET_BY_USER_AND_PASSWORD = "login.entity.User.getByUserAndPassword";
     public static final String NAMED_GET_SALT_BY_USERNAME = "login.entity.User.getSaltByUsername";
 
+    @NotNull
     @Column(nullable = false, unique = true)
     private String username;
-    @JsonIgnore
+    @NotNull
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(nullable = false)
     private String password;
     @JsonIgnore
     private byte[] salt;
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "group_id")
     private Group group;

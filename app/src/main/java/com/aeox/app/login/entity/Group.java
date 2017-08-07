@@ -20,6 +20,13 @@ public class Group extends AbstractEntity{
     )
     private Set<Permission> permissions;
 
+    public Group(){
+    }
+
+    public Group(Integer id){
+        this.setId(id);
+    }
+
     public String getName() {
         return name;
     }

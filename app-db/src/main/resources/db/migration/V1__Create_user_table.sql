@@ -23,7 +23,7 @@ CREATE TABLE Users (
   version     bigint NOT NULL DEFAULT 0,
   username    VARCHAR(75) NOT NULL,
   password    VARCHAR(255) NOT NULL,
-  salt        bytea[64] NOT NULL DEFAULT '{0}',
+  salt        bytea NOT NULL,
   group_id    bigint not null,
   FOREIGN KEY (group_id) REFERENCES Groups(id)
 );

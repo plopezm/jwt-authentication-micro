@@ -7,6 +7,8 @@ import com.aeox.app.security.boundary.JWTSecurized;
 import com.aeox.app.security.exception.UnauthorizedException;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
@@ -40,9 +42,9 @@ public class LoginResource {
     @POST
     @Consumes(value = {"application/json"})
     @JWTSecurized(permissions = {"ALL","CREATE"})
-    public Response createUser(User user){
+    public Response createUser(@Valid @NotNull User user){
         User userCreated = loginService.createUser(user);
-        return Response.created(URI.create("/users")).build();
+        return Response.created(URI.create("/users")).entity(userCreated).build();
     }
 
     @GET

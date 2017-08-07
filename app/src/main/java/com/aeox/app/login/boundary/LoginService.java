@@ -1,5 +1,6 @@
 package com.aeox.app.login.boundary;
 
+import com.aeox.app.login.entity.Group;
 import com.aeox.app.login.entity.User;
 import com.aeox.app.login.encoder.boundary.PasswordEncoded;
 import com.aeox.app.security.exception.UnauthorizedException;
@@ -13,7 +14,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.validation.constraints.NotNull;
 import java.security.Key;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -34,14 +34,15 @@ public class LoginService {
     private EntityManager em;
 
     @PasswordEncoded
-    public User createUser(@NotNull User user){
+    public User createUser(User user){
+        user.setGroup(em.find(Group.class, user.getGroup().getId()));
         em.persist(user);
         em.flush();
         em.refresh(user);
         return user;
     }
 
-    public User findByUsernameAndPassword(@NotNull User user){
+    public User findByUsernameAndPassword(User user){
         LOG.info(user);
         Query query = em.createNamedQuery(User.NAMED_GET_BY_USER_AND_PASSWORD);
         query.setParameter("username", user.getUsername());
